@@ -4,6 +4,11 @@ import { PathName } from './core/enums/path-name.enum';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: PathName.Employees,
+    pathMatch: 'full',
+  },
+  {
     path: PathName.Employees,
     loadChildren: () =>
       import('./pages/employees/employees.module').then(
