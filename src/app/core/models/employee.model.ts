@@ -7,7 +7,7 @@ export interface Employee {
   id: number;
   name: string;
   username: string;
-  DateOfBirth: Date;
+  dateOfBirth: Date;
   country: number;
   area: EmployeeArea;
   commission: number;
@@ -15,5 +15,5 @@ export interface Employee {
   position: GenericType;
   status: Status;
   createdAt: Date;
-  updatedAt?: Date;
+  updatedAt?: Date | null;
 }

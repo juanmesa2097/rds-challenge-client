@@ -10,10 +10,22 @@ const routes: Routes = [
   },
   {
     path: PathName.Employees,
-    loadChildren: () =>
-      import('./pages/employees/employees.module').then(
-        (m) => m.EmployeesModule
-      ),
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('@pages/employees/employees/employees.module').then(
+            (m) => m.EmployeesModule
+          ),
+      },
+      {
+        path: ':id',
+        loadChildren: () =>
+          import('@pages/employees/employee-edit/employee-edit.module').then(
+            (m) => m.EmployeeEditModule
+          ),
+      },
+    ],
   },
 ];
 
