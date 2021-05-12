@@ -1,1 +1,112 @@
-<p>employee-form works!</p>
+<form (submit)="onSubmit($event)">
+  <dx-form
+    [(formData)]="employeeData"
+    [colCount]="2"
+    (onFieldDataChanged)="onFieldDataChanged($event)"
+  >
+    <dxi-item itemType="group">
+      <dxi-item dataField="name">
+        <dxo-label text="Nombre"></dxo-label>
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-item>
+      <!-- /item -->
+
+      <dxi-item
+        dataField="dateOfBirth"
+        editorType="dxDateBox"
+        [editorOptions]="{
+          pickerType: 'rollers'
+        }"
+      >
+        <dxo-label text="Fecha de nacimiento"></dxo-label>
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-item>
+      <!-- /item -->
+
+      <dxi-item dataField="country" editorType="dxSelectBox">
+        <dxo-label text="País"></dxo-label>
+        <!-- <dxi-validation-rule type="required"></dxi-validation-rule> -->
+      </dxi-item>
+      <!-- /item -->
+
+      <dxi-item dataField="username">
+        <dxo-label text="Nombre de usuario"></dxo-label>
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-item>
+      <!-- /item -->
+
+      <dxi-item
+        dataField="hiringDate"
+        editorType="dxDateBox"
+        [editorOptions]="{
+          pickerType: 'rollers'
+        }"
+      >
+        <dxo-label text="Fecha de contratación"></dxo-label>
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-item>
+      <!-- /item -->
+
+      <dxi-item dataField="status" editorType="dxSwitch">
+        <dxo-label text="Estado"></dxo-label>
+      </dxi-item>
+      <!-- /item -->
+    </dxi-item>
+    <!-- /left column -->
+
+    <!-- Right column -->
+    <dxi-item itemType="group">
+      <dxi-item dataField="area">
+        <dxo-label text="Área"></dxo-label>
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-item>
+      <!-- /item -->
+
+      <dxi-item dataField="position" editorType="dxSelectBox">
+        <dxo-label text="Cargo"></dxo-label>
+        <!-- <dxi-validation-rule type="required"></dxi-validation-rule> -->
+      </dxi-item>
+      <!-- /item -->
+
+      <dxi-item
+        dataField="comission"
+        editorType="dxNumberBox"
+        [editorOptions]="{
+          min: 0,
+          max: 100
+        }"
+      >
+        <dxo-label text="Comisión"></dxo-label>
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-item>
+      <!-- /item -->
+    </dxi-item>
+    <!-- /right column -->
+
+    <dxi-item itemType="group" cssClass="my-12 flex" [colSpan]="2">
+      <dxi-item
+        itemType="button"
+        horizontalAlignment="left"
+        [buttonOptions]="{
+          text: 'Guardar',
+          icon: 'save',
+          type: 'success',
+          useSubmitBehavior: true,
+          disabled: submitButtonDisabled
+        }"
+      >
+      </dxi-item>
+      <dxi-item
+        itemType="button"
+        horizontalAlignment="left"
+        [buttonOptions]="{
+          text: 'Atrás',
+          icon: 'arrowleft',
+          type: 'secondary'
+        }"
+      >
+      </dxi-item>
+    </dxi-item>
+    <!-- /buttons -->
+  </dx-form>
+</form>
