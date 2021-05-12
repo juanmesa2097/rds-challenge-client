@@ -3,6 +3,9 @@
 @import "tailwindcss/utilities";
 
 @layer base {
+  @import "01-base/font.scss";
+  @import "01-base/document.scss";
+  @import "01-base/headings.scss";
 }
 
 @layer components {

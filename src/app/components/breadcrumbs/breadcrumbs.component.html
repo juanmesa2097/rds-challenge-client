@@ -1,0 +1,30 @@
+<nav>
+  <ul class="flex items-center">
+    <li
+      *ngFor="let item of items; let last = last"
+      class="flex items-center mr-3"
+    >
+      <a
+        *ngIf="item.path; else justText"
+        [routerLink]="['/', item.path]"
+        class="mr-3 font-semibold text-gray-900 hover:text-blue-700"
+      >
+        {{ item.name }}
+      </a>
+
+      <ng-template #justText>
+        <span class="text-gray-600">{{ item.name }}</span>
+      </ng-template>
+
+      <svg
+        *ngIf="!last"
+        xmlns="http://www.w3.org/2000/svg"
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+      >
+        <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
+      </svg>
+    </li>
+  </ul>
+</nav>

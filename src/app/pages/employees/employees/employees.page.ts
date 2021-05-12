@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Status } from 'src/app/core/enums';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Breadcrumb } from '@app/core/interfaces/breadcrumbs.interface';
+import { PathName, Status } from 'src/app/core/enums';
 import { Employee } from 'src/app/core/models/employee.model';
 
 @Component({
@@ -8,8 +10,11 @@ import { Employee } from 'src/app/core/models/employee.model';
 })
 export class EmployeesPage implements OnInit {
   employees!: Employee[];
+  breadcrumbs: Breadcrumb[];
 
-  constructor() {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
+    this.breadcrumbs = this.activatedRoute.snapshot.data.breadcrumbs;
+
     this.employees = [
       {
         id: 1,
@@ -36,4 +41,12 @@ export class EmployeesPage implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  onClickEdit(id: number): void {
+    this.router.navigate([PathName.Employees, id, 'edit']);
+  }
+
+  onClickPreview(id: number): void {
+    this.router.navigate([PathName.Employees, id, 'preview']);
+  }
 }

@@ -1,0 +1,24 @@
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { Breadcrumb } from '@app/core/interfaces/breadcrumbs.interface';
+import { EmployeesPage } from './employees.page';
+
+const routes = [
+  {
+    path: '',
+    component: EmployeesPage,
+    data: {
+      breadcrumbs: [
+        {
+          name: 'Empleados',
+        },
+      ] as Breadcrumb[],
+    },
+  },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class EmployeesRoutingModule {}

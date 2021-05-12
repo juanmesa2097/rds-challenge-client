@@ -1,3 +1,12 @@
+<app-page-header-wrapper>
+  <h1 class="mb-6 text-3xl text-white md:text-6xl">Empleados</h1>
+  <app-breadcrumbs [items]="breadcrumbs"></app-breadcrumbs>
+</app-page-header-wrapper>
+
 <div class="container">
-  <app-employees-list [employees]="employees"></app-employees-list>
+  <app-employees-list
+    [employees]="employees"
+    (clickEdit)="onClickEdit($event)"
+    (clickPreview)="onClickPreview($event)"
+  ></app-employees-list>
 </div>

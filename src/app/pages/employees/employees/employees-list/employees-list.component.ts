@@ -1,11 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { PathName } from 'src/app/core/enums';
 import { Employee } from 'src/app/core/models/employee.model';
 
 @Component({
@@ -17,6 +18,9 @@ import { Employee } from 'src/app/core/models/employee.model';
 export class EmployeesListComponent implements OnInit {
   @Input() employees!: Employee[];
 
+  @Output() clickEdit = new EventEmitter<number>();
+  @Output() clickPreview = new EventEmitter<number>();
+
   constructor(private router: Router) {
     this.onClickEdit = this.onClickEdit.bind(this);
     this.onClickPreview = this.onClickPreview.bind(this);
@@ -25,10 +29,10 @@ export class EmployeesListComponent implements OnInit {
   ngOnInit(): void {}
 
   onClickEdit({ row }: any): void {
-    this.router.navigate([PathName.Employees, 'edit', row.data.id]);
+    this.clickEdit.emit(row.data.id);
   }
 
   onClickPreview({ row }: any): void {
-    this.router.navigate([PathName.Employees, 'preview', row.data.id]);
+    this.clickPreview.emit(row.data.id);
   }
 }
