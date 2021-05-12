@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   challengeApi: '',
-  countriesApi: 'https://restcountries.eu/rest/v2/all',
+  countriesApiV2: 'https://restcountries.eu/rest/v2',
 };
 
 /*

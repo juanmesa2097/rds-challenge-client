@@ -23,9 +23,18 @@
       </dxi-item>
       <!-- /item -->
 
-      <dxi-item dataField="country" editorType="dxSelectBox">
+      <dxi-item
+        dataField="country"
+        editorType="dxSelectBox"
+        [editorOptions]="{
+          items: countriesList,
+          valueExpr: 'alpha3Code',
+          displayExpr: 'name',
+          searchEnabled: true
+        }"
+      >
         <dxo-label text="País"></dxo-label>
-        <!-- <dxi-validation-rule type="required"></dxi-validation-rule> -->
+        <dxi-validation-rule type="required"></dxi-validation-rule>
       </dxi-item>
       <!-- /item -->
 

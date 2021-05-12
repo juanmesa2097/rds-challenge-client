@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { Country } from '@app/core/models';
 import { Employee } from '@app/core/models/employee.model';
 
 @Component({
@@ -8,6 +14,8 @@ import { Employee } from '@app/core/models/employee.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmployeeFormComponent implements OnInit {
+  @Input() countriesList!: Country[] | null;
+
   submitButtonDisabled = true;
 
   employeeData: Partial<Employee> = {};
