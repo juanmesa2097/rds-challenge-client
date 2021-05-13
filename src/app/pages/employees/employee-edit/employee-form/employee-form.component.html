@@ -1,8 +1,18 @@
+<p
+  *ngIf="operationType === 'preview'"
+  class="relative p-4 pl-8 mb-4 text-blue-800 border-l-8 border-blue-600 rounded-lg  bg-gradient-to-br from-blue-100 to-blue-200"
+>
+  Se encuentra en modo <strong class="font-semibold">vista previa</strong>.
+  <br />
+  No podrá editar los datos mientras este modo esté activado.
+</p>
+
 <form (submit)="onSubmit($event)">
   <dx-form
     #form
     [(formData)]="employeeData"
     [colCount]="2"
+    [readOnly]="operationType === 'preview'"
     (onContentReady)="onContentReady($event)"
     (onFieldDataChanged)="onFieldDataChanged($event)"
   >
@@ -127,7 +137,12 @@
     </dxi-item>
     <!-- /right column -->
 
-    <dxi-item itemType="group" cssClass="my-12 flex" [colSpan]="2">
+    <dxi-item
+      *ngIf="operationType !== 'preview'"
+      itemType="group"
+      cssClass="my-12 flex"
+      [colSpan]="2"
+    >
       <dxi-item
         itemType="button"
         horizontalAlignment="left"

@@ -8,7 +8,7 @@ function getRouteData(lastBreadcrumbName: string) {
   return {
     breadcrumbs: [
       {
-        name: 'Empleados',
+        name: 'Lista de empleados',
         path: PathName.Employees,
       },
       {

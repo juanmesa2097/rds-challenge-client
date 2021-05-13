@@ -10,7 +10,7 @@ const routes = [
     data: {
       breadcrumbs: [
         {
-          name: 'Empleados',
+          name: 'Lista de empleados',
         },
       ] as Breadcrumb[],
     },
