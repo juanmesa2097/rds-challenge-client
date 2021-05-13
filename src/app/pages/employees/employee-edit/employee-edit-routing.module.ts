@@ -20,17 +20,17 @@ function getRouteData(lastBreadcrumbName: string) {
 
 const routes = [
   {
-    path: 'create',
+    path: 'new',
     component: EmployeeEditPage,
     data: getRouteData('Crear empleado'),
   },
   {
-    path: 'edit',
+    path: ':id/edit',
     component: EmployeeEditPage,
     data: getRouteData('Editar empleado'),
   },
   {
-    path: 'preview',
+    path: ':id/preview',
     component: EmployeeEditPage,
     data: getRouteData('Ver empleado'),
   },

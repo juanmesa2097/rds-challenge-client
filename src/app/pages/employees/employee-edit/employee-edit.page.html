@@ -1,8 +1,34 @@
 <app-page-header-wrapper>
-  <h1 class="mb-6 text-3xl text-white md:text-6xl">{{title}}</h1>
+  <h1 class="mb-6 text-3xl text-white md:text-6xl">
+    <ng-container [ngSwitch]="currentRoute">
+      <ng-container *ngSwitchCase="'new'"> Crear nuevo empleado </ng-container>
+      <ng-container *ngSwitchCase="'edit'">
+        Editando: {{employee?.name}}
+      </ng-container>
+      <ng-container *ngSwitchCase="'preview'">
+        Ver: {{employee?.name}}
+      </ng-container>
+    </ng-container>
+  </h1>
   <app-breadcrumbs [items]="breadcrumbs"></app-breadcrumbs>
 </app-page-header-wrapper>
 
-<div class="container">
-  <app-employee-form [countriesList]="countries$ | async"></app-employee-form>
+<div id="formContainer" class="container">
+  <app-employee-form
+    *ngIf="canLoad"
+    [employee]="employee"
+    [countries]="countries"
+    [areas]="areas"
+    [positions]="positions"
+    [operationType]="currentRoute"
+    (changeArea)="onChangeArea($event)"
+    (save)="onSave($event)"
+  ></app-employee-form>
 </div>
+
+<dx-load-panel
+  shadingColor="rgba(0,0,0,0.05)"
+  [position]="{ of: '#formContainer', at: 'center' }"
+  [visible]="!canLoad || loading"
+>
+</dx-load-panel>

@@ -5,9 +5,15 @@
     (onFieldDataChanged)="onFieldDataChanged($event)"
   >
     <dxi-item itemType="group">
-      <dxi-item dataField="name">
+      <dxi-item dataField="name" *ngIf="operationType === 'new'">
         <dxo-label text="Nombre"></dxo-label>
         <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule
+          type="pattern"
+          pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$"
+          message="No se permiten números y/o caracteres especiales."
+        >
+        </dxi-validation-rule>
       </dxi-item>
       <!-- /item -->
 
@@ -27,7 +33,7 @@
         dataField="country"
         editorType="dxSelectBox"
         [editorOptions]="{
-          items: countriesList,
+          items: countries,
           valueExpr: 'alpha3Code',
           displayExpr: 'name',
           searchEnabled: true
@@ -41,6 +47,12 @@
       <dxi-item dataField="username">
         <dxo-label text="Nombre de usuario"></dxo-label>
         <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule
+          type="pattern"
+          pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$"
+          message="No se permiten números y/o caracteres especiales."
+        >
+        </dxi-validation-rule>
       </dxi-item>
       <!-- /item -->
 
@@ -63,22 +75,43 @@
     </dxi-item>
     <!-- /left column -->
 
-    <!-- Right column -->
     <dxi-item itemType="group">
-      <dxi-item dataField="area">
+      <dxi-item
+        cssClass="h-24 mb-1 pt-6"
+        dataField="areaId"
+        editorType="dxRadioGroup"
+        [editorOptions]="{
+          items: areas,
+          valueExpr: 'id',
+          displayExpr: 'name',
+          layout: 'horizontal',
+          onValueChanged: onAreaChanged
+        }"
+      >
         <dxo-label text="Área"></dxo-label>
         <dxi-validation-rule type="required"></dxi-validation-rule>
       </dxi-item>
       <!-- /item -->
 
-      <dxi-item dataField="position" editorType="dxSelectBox">
+      <dxi-item
+        dataField="positionId"
+        editorType="dxSelectBox"
+        [editorOptions]="{
+          items: positions,
+          valueExpr: 'id',
+          displayExpr: 'name',
+          searchEnabled: true,
+          onValueChanged: onPositionChanged
+        }"
+      >
         <dxo-label text="Cargo"></dxo-label>
-        <!-- <dxi-validation-rule type="required"></dxi-validation-rule> -->
+        <dxi-validation-rule type="required"></dxi-validation-rule>
       </dxi-item>
       <!-- /item -->
 
       <dxi-item
-        dataField="comission"
+        *ngIf="comissionVisible"
+        dataField="commission"
         editorType="dxNumberBox"
         [editorOptions]="{
           min: 0,

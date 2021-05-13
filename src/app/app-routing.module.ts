@@ -19,7 +19,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: ':id',
+        path: '',
         loadChildren: () =>
           import('@pages/employees/employee-edit/employee-edit.module').then(
             (m) => m.EmployeeEditModule

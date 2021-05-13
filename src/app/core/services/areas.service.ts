@@ -2,20 +2,22 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { NgxGenericRestService } from 'ngx-grs';
 import { Observable } from 'rxjs';
-import { Country } from '../types';
+import { Area } from '../types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CountriesService extends NgxGenericRestService {
+export class AreasService extends NgxGenericRestService {
   constructor() {
     super({
-      baseUrl: environment.countriesApiV2,
-      resourceName: 'all',
+      baseUrl: environment.challengeApiV1,
+      resourceName: 'areas',
     });
   }
 
-  getAll(): Observable<Country[]> {
-    return super.list<Country[]>();
+  getAll(): Observable<Area[]> {
+    return super.list<Area[]>({
+      mapFn: (res) => res.data,
+    });
   }
 }

@@ -1,19 +1,44 @@
-<dx-data-grid [dataSource]="employees">
-  <dxo-editing [allowDeleting]="true"></dxo-editing>
-  <dxo-search-panel [visible]="true" [width]="300"></dxo-search-panel>
-  <dxo-paging [pageSize]="10"></dxo-paging>
-  <dxo-pager
-    [showPageSizeSelector]="true"
-    [allowedPageSizes]="[10, 25, 50]"
-  ></dxo-pager>
+<div>
+  <dx-data-grid [dataSource]="employees">
+    <dxo-editing [allowDeleting]="true"></dxo-editing>
+    <dxo-search-panel [visible]="true" [width]="300"></dxo-search-panel>
+    <dxo-filter-row [visible]="true"> </dxo-filter-row>
+    <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[10, 25, 50]"
+    ></dxo-pager>
+    <!-- /options -->
 
-  <dxi-column dataField="name" caption="Nombre (cargo)"></dxi-column>
-  <dxi-column dataField="dateOfBirth" caption="Edad"></dxi-column>
-  <dxi-column dataField="hiringDate" caption="Fecha contratación"></dxi-column>
-  <dxi-column dataField="status" caption="Estado"></dxi-column>
-  <dxi-column type="buttons">
-    <dxi-button icon="edit" [onClick]="onClickEdit"></dxi-button>
-    <dxi-button icon="user" [onClick]="onClickPreview"></dxi-button>
-    <dxi-button icon="trash" name="delete"></dxi-button>
-  </dxi-column>
-</dx-data-grid>
+    <dxi-column
+      [calculateCellValue]="calculateEmployeeName"
+      caption="Nombre (cargo)"
+    ></dxi-column>
+    <dxi-column
+      dataField="dateOfBirth"
+      caption="Edad"
+      dataType="date"
+    ></dxi-column>
+    <dxi-column
+      dataField="hiringDate"
+      caption="Fecha contratación"
+      dataType="date"
+    ></dxi-column>
+    <dxi-column dataField="status" caption="Estado"></dxi-column>
+    <dxi-column type="buttons">
+      <dxi-button icon="edit" [onClick]="onClickEdit"></dxi-button>
+      <dxi-button icon="user" [onClick]="onClickPreview"></dxi-button>
+      <dxi-button icon="trash" name="delete"></dxi-button>
+    </dxi-column>
+    <!-- /columns -->
+  </dx-data-grid>
+
+  <dx-speed-dial-action
+    icon="add"
+    label="Crear nuevo empleado"
+    [index]="1"
+    (onClick)="onClickNewEmployee()"
+  >
+  </dx-speed-dial-action>
+</div>

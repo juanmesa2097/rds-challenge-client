@@ -5,7 +5,8 @@
 
 <div class="container">
   <app-employees-list
-    [employees]="employees"
+    [employees]="(employees$ | async) || []"
+    (clickNew)="onClickNew()"
     (clickEdit)="onClickEdit($event)"
     (clickPreview)="onClickPreview($event)"
   ></app-employees-list>

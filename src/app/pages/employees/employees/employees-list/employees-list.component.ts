@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Employee } from 'src/app/core/models/employee.model';
+import { Employee } from '@app/core/types/employee.type';
 
 @Component({
   selector: 'app-employees-list',
@@ -18,6 +18,7 @@ import { Employee } from 'src/app/core/models/employee.model';
 export class EmployeesListComponent implements OnInit {
   @Input() employees!: Employee[];
 
+  @Output() clickNew = new EventEmitter<void>();
   @Output() clickEdit = new EventEmitter<number>();
   @Output() clickPreview = new EventEmitter<number>();
 
@@ -28,11 +29,19 @@ export class EmployeesListComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  calculateEmployeeName({ name, position }: Employee): string {
+    return `${name} (${position?.name})`;
+  }
+
   onClickEdit({ row }: any): void {
     this.clickEdit.emit(row.data.id);
   }
 
   onClickPreview({ row }: any): void {
     this.clickPreview.emit(row.data.id);
+  }
+
+  onClickNewEmployee(): void {
+    this.clickNew.emit();
   }
 }
