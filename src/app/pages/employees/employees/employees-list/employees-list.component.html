@@ -12,6 +12,13 @@
     <!-- /options -->
 
     <dxi-column
+      dataField="avatar"
+      [width]="90"
+      [allowFiltering]="false"
+      [allowSorting]="false"
+      cellTemplate="avatarTemplate"
+    ></dxi-column>
+    <dxi-column
       [calculateCellValue]="calculateEmployeeName"
       caption="Nombre (cargo)"
     ></dxi-column>
@@ -25,13 +32,52 @@
       caption="Fecha contratación"
       dataType="date"
     ></dxi-column>
-    <dxi-column dataField="status" caption="Estado"></dxi-column>
+    <dxi-column
+      dataField="status"
+      caption="Estado"
+      cellTemplate="statusTemplate"
+    ></dxi-column>
     <dxi-column type="buttons">
       <dxi-button icon="edit" [onClick]="onClickEdit"></dxi-button>
       <dxi-button icon="user" [onClick]="onClickPreview"></dxi-button>
       <dxi-button icon="trash" name="delete"></dxi-button>
     </dxi-column>
     <!-- /columns -->
+
+    <div *dxTemplate="let data of 'avatarTemplate'">
+      <div class="object-cover overflow-hidden rounded-full">
+        <img src="https://i.pravatar.cc/150?img={{ getRandomNumber() }}" />
+      </div>
+    </div>
+
+    <div *dxTemplate="let data of 'statusTemplate'">
+      <div class="flex items-center" *ngIf="data.data.status">
+        <span class="relative flex w-3 h-3 mr-3">
+          <span
+            class="absolute inline-flex w-full h-full bg-green-400 rounded-full opacity-75  animate-ping"
+          ></span>
+          <span
+            class="relative inline-flex w-3 h-3 bg-green-500 rounded-full"
+          ></span>
+        </span>
+
+        <span class="text-green-500">Activo</span>
+      </div>
+
+      <div class="flex items-center" *ngIf="!data.data.status">
+        <span class="relative flex w-3 h-3 mr-3">
+          <span
+            class="absolute inline-flex w-full h-full bg-red-400 rounded-full opacity-75  animate-ping"
+          ></span>
+          <span
+            class="relative inline-flex w-3 h-3 bg-red-500 rounded-full"
+          ></span>
+        </span>
+
+        <span class="text-red-500">Inactivo</span>
+      </div>
+    </div>
+    <!-- /cell templates -->
   </dx-data-grid>
 
   <dx-speed-dial-action

@@ -1,7 +1,9 @@
 <form (submit)="onSubmit($event)">
   <dx-form
+    #form
     [(formData)]="employeeData"
     [colCount]="2"
+    (onContentReady)="onContentReady($event)"
     (onFieldDataChanged)="onFieldDataChanged($event)"
   >
     <dxi-item itemType="group">

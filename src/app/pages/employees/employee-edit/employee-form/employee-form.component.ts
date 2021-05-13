@@ -1,14 +1,18 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { Area, Country, Position } from '@app/core/types';
 import { Employee } from '@app/core/types/employee.type';
 import { OperationType } from '@app/core/types/operation.type';
+import { DxFormComponent } from 'devextreme-angular';
+import dxForm from 'devextreme/ui/form';
 
 @Component({
   selector: 'app-employee-form',
@@ -17,6 +21,8 @@ import { OperationType } from '@app/core/types/operation.type';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmployeeFormComponent implements OnInit {
+  @ViewChild('form') form!: DxFormComponent;
+
   @Input() employee!: Employee | null;
   @Input() countries!: Country[] | null;
   @Input() areas!: Area[] | null;
@@ -29,9 +35,9 @@ export class EmployeeFormComponent implements OnInit {
   submitButtonDisabled = true;
   comissionVisible = false;
 
-  employeeData: Partial<Employee> & { areaId?: number | null } = {};
+  employeeData: Partial<Employee> = {};
 
-  constructor() {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.employeeData = { ...this.employee };
@@ -45,9 +51,16 @@ export class EmployeeFormComponent implements OnInit {
     this.onPositionChanged = this.onPositionChanged.bind(this);
   }
 
+  onContentReady({ component }: any) {
+    if (this.operationType === 'new') {
+      component.getEditor('name').focus();
+    }
+
+    this.validateForm(component);
+  }
+
   onFieldDataChanged({ component }: any) {
-    const { isValid } = component.validate();
-    this.submitButtonDisabled = !isValid;
+    this.validateForm(component);
   }
 
   onAreaChanged({ value }: { value: number }): void {
@@ -72,5 +85,11 @@ export class EmployeeFormComponent implements OnInit {
       this.comissionVisible = false;
       this.employeeData.commission = null;
     }
+  }
+
+  private validateForm(component: dxForm) {
+    const { isValid } = component.validate();
+    this.submitButtonDisabled = !isValid;
+    this.cdr.detectChanges();
   }
 }
