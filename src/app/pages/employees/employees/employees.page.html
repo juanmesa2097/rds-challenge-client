@@ -3,11 +3,26 @@
   <app-breadcrumbs [items]="breadcrumbs"></app-breadcrumbs>
 </app-page-header-wrapper>
 
-<div class="container">
+<div id="listContainer" class="container">
   <app-employees-list
-    [employees]="(employees$ | async) || []"
+    *ngIf="(employees$ | async)?.length && (employees$ | async) as employees; else employeesNotFound"
+    [employees]="employees"
     (clickNew)="onClickNew()"
     (clickEdit)="onClickEdit($event)"
     (clickPreview)="onClickPreview($event)"
   ></app-employees-list>
+
+  <ng-template #employeesNotFound>
+    <app-employees-not-found
+      *ngIf="!loading"
+      (createEmployee)="onCreateEmployee()"
+    ></app-employees-not-found>
+  </ng-template>
 </div>
+
+<dx-load-panel
+  shadingColor="rgba(0,0,0,0.05)"
+  [position]="{ of: '#listContainer', at: 'center' }"
+  [visible]="loading"
+>
+</dx-load-panel>

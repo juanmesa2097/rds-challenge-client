@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Employee } from '@app/core/types/employee.type';
+import { Employee } from '@app/core/types/models/employee.type';
 
 @Component({
   selector: 'app-employees-list',
@@ -47,5 +47,9 @@ export class EmployeesListComponent implements OnInit {
 
   onClickNewEmployee(): void {
     this.clickNew.emit();
+  }
+
+  onRowRemoved(e: any) {
+    console.log(e);
   }
 }

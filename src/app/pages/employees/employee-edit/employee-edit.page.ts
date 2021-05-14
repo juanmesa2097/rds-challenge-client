@@ -9,7 +9,7 @@ import { PositionsService } from '@app/core/services/positions.service';
 import { ToastsService } from '@app/core/services/toasts.service';
 import { Area, Country, Employee, Position } from '@app/core/types';
 import { OperationType } from '@app/core/types/operation.type';
-import { confirm } from 'devextreme/ui/dialog';
+import { custom } from 'devextreme/ui/dialog';
 import { forkJoin, from, of } from 'rxjs';
 import { finalize, switchMap } from 'rxjs/operators';
 
@@ -102,13 +102,27 @@ export class EmployeeEditPage implements OnInit {
   }
 
   private async showConfirmDialog(): Promise<void> {
-    await confirm(
-      'Los datos se guardaron correctamente.<br /> ¿Desea navegar a la lista de empleados?',
-      '¡Registro exitoso! 🎉🎉🎉'
-    ).then((confirmed) => {
-      if (confirmed) {
-        this.router.navigate(['/', PathName.Employees]);
-      }
+    const dialog = custom({
+      title: '¡Registro exitoso! 🎉🎉🎉',
+      messageHtml:
+        'Los datos se guardaron correctamente.<br /> ¿Desea navegar a la lista de empleados o crear uno nuevo?',
+      buttons: [
+        {
+          text: 'Ver empleados',
+          type: 'default',
+          onClick: () => {
+            this.router.navigate(['/', PathName.Employees]);
+          },
+        },
+        {
+          text: 'Crear otro empleado',
+          onClick: () => {
+            return;
+          },
+        },
+      ],
     });
+
+    await dialog.show();
   }
 }

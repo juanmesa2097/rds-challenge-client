@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Area, Country, Position } from '@app/core/types';
-import { Employee } from '@app/core/types/employee.type';
+import { Employee } from '@app/core/types/models/employee.type';
 import { OperationType } from '@app/core/types/operation.type';
 import { DxFormComponent } from 'devextreme-angular';
 import dxForm from 'devextreme/ui/form';
@@ -74,8 +74,11 @@ export class EmployeeFormComponent implements OnInit {
 
   onSubmit(event: Event): void {
     event.preventDefault();
-    console.log(this.employeeData);
-    this.save.emit(this.employeeData as Employee);
+
+    if (this.validateForm(this.form.instance)) {
+      console.log(this.employeeData);
+      this.save.emit(this.employeeData as Employee);
+    }
   }
 
   private validateCommission(positionId: number): void {
@@ -87,9 +90,10 @@ export class EmployeeFormComponent implements OnInit {
     }
   }
 
-  private validateForm(component: dxForm) {
+  private validateForm(component: dxForm): boolean {
     const { isValid } = component.validate();
     this.submitButtonDisabled = !isValid;
     this.cdr.detectChanges();
+    return !!isValid;
   }
 }

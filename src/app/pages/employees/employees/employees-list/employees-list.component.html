@@ -1,90 +1,70 @@
-<div>
-  <dx-data-grid [dataSource]="employees">
-    <dxo-editing [allowDeleting]="true"></dxo-editing>
-    <dxo-search-panel [visible]="true" [width]="300"></dxo-search-panel>
-    <dxo-filter-row [visible]="true"> </dxo-filter-row>
-    <dxo-header-filter [visible]="true"></dxo-header-filter>
-    <dxo-paging [pageSize]="10"></dxo-paging>
-    <dxo-pager
-      [showPageSizeSelector]="true"
-      [allowedPageSizes]="[10, 25, 50]"
-    ></dxo-pager>
-    <!-- /options -->
+<dx-data-grid [dataSource]="employees" (onRowRemoved)="onRowRemoved($event)">
+  <dxo-editing [allowDeleting]="true"></dxo-editing>
+  <dxo-search-panel [visible]="true" [width]="300"></dxo-search-panel>
+  <dxo-filter-row [visible]="true"> </dxo-filter-row>
+  <dxo-header-filter [visible]="true"></dxo-header-filter>
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager
+    [showPageSizeSelector]="true"
+    [allowedPageSizes]="[10, 25, 50]"
+  ></dxo-pager>
+  <!-- /options -->
 
-    <dxi-column
-      dataField="avatar"
-      [width]="90"
-      [allowFiltering]="false"
-      [allowSorting]="false"
-      cellTemplate="avatarTemplate"
-    ></dxi-column>
-    <dxi-column
-      [calculateCellValue]="calculateEmployeeName"
-      caption="Nombre (cargo)"
-    ></dxi-column>
-    <dxi-column
-      dataField="dateOfBirth"
-      caption="Edad"
-      dataType="date"
-    ></dxi-column>
-    <dxi-column
-      dataField="hiringDate"
-      caption="Fecha contratación"
-      dataType="date"
-    ></dxi-column>
-    <dxi-column
-      dataField="status"
-      caption="Estado"
-      cellTemplate="statusTemplate"
-    ></dxi-column>
-    <dxi-column type="buttons">
-      <dxi-button icon="edit" [onClick]="onClickEdit"></dxi-button>
-      <dxi-button icon="user" [onClick]="onClickPreview"></dxi-button>
-      <dxi-button icon="trash" name="delete"></dxi-button>
-    </dxi-column>
-    <!-- /columns -->
+  <dxi-column
+    dataField="avatar"
+    [width]="90"
+    [allowFiltering]="false"
+    [allowSorting]="false"
+    cellTemplate="avatarTemplate"
+  ></dxi-column>
+  <dxi-column
+    [calculateCellValue]="calculateEmployeeName"
+    caption="Nombre (cargo)"
+  ></dxi-column>
+  <dxi-column
+    dataField="dateOfBirth"
+    caption="Edad"
+    dataType="date"
+  ></dxi-column>
+  <dxi-column
+    dataField="hiringDate"
+    caption="Fecha contratación"
+    dataType="date"
+    format="longDate"
+  ></dxi-column>
+  <dxi-column
+    dataField="status"
+    caption="Estado"
+    cellTemplate="statusTemplate"
+  ></dxi-column>
+  <dxi-column type="buttons">
+    <dxi-button icon="edit" [onClick]="onClickEdit"></dxi-button>
+    <dxi-button icon="user" [onClick]="onClickPreview"></dxi-button>
+    <dxi-button icon="trash" name="delete"></dxi-button>
+  </dxi-column>
+  <!-- /columns -->
 
-    <div *dxTemplate="let data of 'avatarTemplate'">
-      <div class="object-cover overflow-hidden rounded-full">
-        <img src="https://i.pravatar.cc/150?img={{ getRandomNumber() }}" />
-      </div>
+  <div *dxTemplate="let data of 'avatarTemplate'">
+    <div class="object-cover overflow-hidden rounded-full">
+      <img src="https://i.pravatar.cc/150?img={{ getRandomNumber() }}" />
     </div>
+  </div>
 
-    <div *dxTemplate="let data of 'statusTemplate'">
-      <div class="flex items-center" *ngIf="data.data.status">
-        <span class="relative flex w-3 h-3 mr-3">
-          <span
-            class="absolute inline-flex w-full h-full bg-green-400 rounded-full opacity-75  animate-ping"
-          ></span>
-          <span
-            class="relative inline-flex w-3 h-3 bg-green-500 rounded-full"
-          ></span>
-        </span>
-
-        <span class="text-green-500">Activo</span>
-      </div>
-
-      <div class="flex items-center" *ngIf="!data.data.status">
-        <span class="relative flex w-3 h-3 mr-3">
-          <span
-            class="absolute inline-flex w-full h-full bg-red-400 rounded-full opacity-75  animate-ping"
-          ></span>
-          <span
-            class="relative inline-flex w-3 h-3 bg-red-500 rounded-full"
-          ></span>
-        </span>
-
-        <span class="text-red-500">Inactivo</span>
-      </div>
+  <div *dxTemplate="let data of 'statusTemplate'">
+    <div class="flex items-center" *ngIf="data.data.status; else inactive">
+      <app-employee-status type="success" text="Activo"></app-employee-status>
     </div>
-    <!-- /cell templates -->
-  </dx-data-grid>
+    <ng-template #inactive>
+      <app-employee-status type="danger" text="Inactivo"></app-employee-status>
+    </ng-template>
+  </div>
+  <!-- /cell templates -->
+</dx-data-grid>
 
-  <dx-speed-dial-action
-    icon="add"
-    label="Crear nuevo empleado"
-    [index]="1"
-    (onClick)="onClickNewEmployee()"
-  >
-  </dx-speed-dial-action>
-</div>
+<dx-speed-dial-action
+  icon="add"
+  label="Crear nuevo empleado"
+  [index]="1"
+  (onClick)="onClickNewEmployee()"
+>
+</dx-speed-dial-action>

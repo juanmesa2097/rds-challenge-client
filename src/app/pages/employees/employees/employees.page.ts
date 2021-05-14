@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Breadcrumb } from '@app/core/interfaces/breadcrumbs.interface';
 import { EmployeesService } from '@app/core/services/employees.service';
-import { Employee } from '@app/core/types/employee.type';
+import { ToastsService } from '@app/core/services/toasts.service';
+import { Employee } from '@app/core/types/models/employee.type';
 import { Observable } from 'rxjs';
-import { PathName } from 'src/app/core/enums';
+import { tap } from 'rxjs/operators';
+import { PathName, ResponseSuccessMessage } from 'src/app/core/enums';
 
 @Component({
   templateUrl: './employees.page.html',
@@ -15,16 +17,27 @@ export class EmployeesPage implements OnInit {
 
   breadcrumbs: Breadcrumb[];
 
+  canLoad = false;
+  loading = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private employeesService: EmployeesService
+    private employeesService: EmployeesService,
+    private toastsService: ToastsService
   ) {
     this.breadcrumbs = this.activatedRoute.snapshot.data.breadcrumbs;
   }
 
   ngOnInit(): void {
-    this.employees$ = this.employeesService.getAll();
+    this.loading = true;
+
+    this.employees$ = this.employeesService.getAll().pipe(
+      tap((employees) => {
+        this.canLoad = employees?.length > 0;
+        this.loading = false;
+      })
+    );
   }
 
   onClickNew(): void {
@@ -37,5 +50,17 @@ export class EmployeesPage implements OnInit {
 
   onClickPreview(id: number): void {
     this.router.navigate([PathName.Employees, id, 'preview']);
+  }
+
+  onDeleteEmployee(employeeId: number): void {
+    this.employeesService.delete(employeeId).subscribe((result) => {
+      if (result) {
+        this.toastsService.showSuccess(ResponseSuccessMessage.Delete);
+      }
+    });
+  }
+
+  onCreateEmployee(): void {
+    this.router.navigate([PathName.Employees, 'new']);
   }
 }
