@@ -43,7 +43,6 @@ export class EmployeesPage implements OnInit {
           activeEmployeesCount,
           inactiveEmployeesCount,
         }) => {
-          console.log(totalCount, activeEmployeesCount, inactiveEmployeesCount);
           this.employees = employees;
 
           this.stats.push({

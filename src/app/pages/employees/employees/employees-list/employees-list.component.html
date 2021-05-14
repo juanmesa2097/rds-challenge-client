@@ -22,6 +22,7 @@
     cellTemplate="avatarTemplate"
   ></dxi-column>
   <dxi-column
+    dataField="name"
     [calculateCellValue]="calculateEmployeeName"
     caption="Nombre (cargo)"
   ></dxi-column>
@@ -50,7 +51,7 @@
 
   <div *dxTemplate="let data of 'avatarTemplate'">
     <div class="object-cover overflow-hidden rounded-full">
-      <img src="https://i.pravatar.cc/150?img={{ getRandomNumber() }}" />
+      <img [src]="data.data.avatarUrl" />
     </div>
   </div>
 
@@ -59,15 +60,10 @@
       *ngIf="data.data.status; else inactive"
       type="success"
       text="Activo"
-      class="flex items-center justify-center"
     ></app-employee-status>
 
     <ng-template #inactive>
-      <app-employee-status
-        type="danger"
-        text="Inactivo"
-        class="flex items-center justify-center"
-      ></app-employee-status>
+      <app-employee-status type="danger" text="Inactivo"></app-employee-status>
     </ng-template>
   </div>
   <!-- /cell templates -->

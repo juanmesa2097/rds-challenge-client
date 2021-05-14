@@ -29,10 +29,6 @@ export class EmployeesListComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  getRandomNumber(): number {
-    return Math.floor(Math.random() * 70);
-  }
-
   calculateEmployeeName({ name, position }: Employee): string {
     return `${name} (${position?.name})`;
   }

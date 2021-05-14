@@ -10,5 +10,7 @@ export type Employee = BaseType & {
   hiringDate: Date;
   position: Position | null;
   positionId: number | null;
-  areaId: number; // NO pertenece a la entidad (Join);
+} & {
+  areaId: number;
+  avatarUrl?: string;
 };
