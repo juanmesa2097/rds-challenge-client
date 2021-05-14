@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { InfoStats } from '@app/components/stats/stats.interface';
 import { Breadcrumb } from '@app/core/interfaces/breadcrumbs.interface';
 import { EmployeesService } from '@app/core/services/employees.service';
 import { ToastsService } from '@app/core/services/toasts.service';
@@ -13,6 +14,7 @@ import { PathName, ResponseSuccessMessage } from 'src/app/core/enums';
 })
 export class EmployeesPage implements OnInit {
   employees: Employee[] = [];
+  stats: InfoStats[] = [];
 
   breadcrumbs: Breadcrumb[];
 
@@ -34,9 +36,38 @@ export class EmployeesPage implements OnInit {
     this.employeesService
       .getAll()
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe((employees) => {
-        this.employees = employees;
-      });
+      .subscribe(
+        ({
+          employees,
+          totalCount,
+          activeEmployeesCount,
+          inactiveEmployeesCount,
+        }) => {
+          console.log(totalCount, activeEmployeesCount, inactiveEmployeesCount);
+          this.employees = employees;
+
+          this.stats.push({
+            name: 'Total',
+            value: totalCount,
+            imgPath: 'https://img.icons8.com/nolan/64/add-database.png',
+            className: 'bg-success-100',
+          });
+
+          this.stats.push({
+            name: 'Empleados activos',
+            value: activeEmployeesCount,
+            imgPath: 'https://img.icons8.com/nolan/64/myspace.png',
+            className: 'bg-success-100',
+          });
+
+          this.stats.push({
+            name: 'Empleados inactivos',
+            value: inactiveEmployeesCount,
+            imgPath: 'https://img.icons8.com/nolan/64/privacy.png',
+            className: 'bg-success-100',
+          });
+        }
+      );
   }
 
   onClickNew(): void {

@@ -55,11 +55,19 @@
   </div>
 
   <div *dxTemplate="let data of 'statusTemplate'">
-    <div class="flex items-center" *ngIf="data.data.status; else inactive">
-      <app-employee-status type="success" text="Activo"></app-employee-status>
-    </div>
+    <app-employee-status
+      *ngIf="data.data.status; else inactive"
+      type="success"
+      text="Activo"
+      class="flex items-center justify-center"
+    ></app-employee-status>
+
     <ng-template #inactive>
-      <app-employee-status type="danger" text="Inactivo"></app-employee-status>
+      <app-employee-status
+        type="danger"
+        text="Inactivo"
+        class="flex items-center justify-center"
+      ></app-employee-status>
     </ng-template>
   </div>
   <!-- /cell templates -->

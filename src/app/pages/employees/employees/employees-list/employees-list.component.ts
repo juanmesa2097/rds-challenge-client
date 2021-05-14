@@ -6,7 +6,6 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Router } from '@angular/router';
 import { Employee } from '@app/core/types/models/employee.type';
 
 @Component({
@@ -23,7 +22,7 @@ export class EmployeesListComponent implements OnInit {
   @Output() clickPreview = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();
 
-  constructor(private router: Router) {
+  constructor() {
     this.onClickEdit = this.onClickEdit.bind(this);
     this.onClickPreview = this.onClickPreview.bind(this);
   }

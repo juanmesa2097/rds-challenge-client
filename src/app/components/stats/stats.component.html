@@ -1,0 +1,15 @@
+<div class="flex flex-wrap m-6">
+  <div class="flex items-center mx-12 my-6 info-item" *ngFor="let item of data">
+    <div class="p-2 mr-3 rounded-lg info-icon {{ item.className }}">
+      <img [src]="item.imgPath" class="w-full h-full" />
+    </div>
+    <div class="flex flex-col">
+      <span class="text-xl font-bold">
+        {{ item.value | number }}
+      </span>
+      <span class="text-xs uppercase md:text-sm text-secondary">
+        {{ item.name }}
+      </span>
+    </div>
+  </div>
+</div>

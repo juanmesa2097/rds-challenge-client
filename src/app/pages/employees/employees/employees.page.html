@@ -3,7 +3,10 @@
   <app-breadcrumbs [items]="breadcrumbs"></app-breadcrumbs>
 </app-page-header-wrapper>
 
-<div id="listContainer" class="container">
+<div id="listContainer" class="container bg-white overflow-hidden rounded-lg">
+  <app-stats *ngIf="stats.length" [data]="stats"></app-stats>
+  <!-- /stats -->
+
   <app-employees-list
     *ngIf="employees?.length; else employeesNotFound"
     [employees]="employees"
@@ -12,6 +15,7 @@
     (clickPreview)="onClickPreview($event)"
     (delete)="onDeleteEmployee($event)"
   ></app-employees-list>
+  <!-- /list of employees  -->
 
   <ng-template #employeesNotFound>
     <app-employees-not-found
@@ -19,6 +23,7 @@
       (createEmployee)="onCreateEmployee()"
     ></app-employees-not-found>
   </ng-template>
+  <!-- /employees not found -->
 </div>
 
 <dx-load-panel

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { NgxGenericRestService } from 'ngx-grs';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { WrapperResult } from '../interfaces';
 import { Employee } from '../types';
 
 @Injectable({
@@ -15,10 +17,20 @@ export class EmployeesService extends NgxGenericRestService {
     });
   }
 
-  getAll(): Observable<Employee[]> {
-    return super.list<Employee[]>({
-      mapFn: (res) => res.data,
-    });
+  getAll(): Observable<{
+    employees: Employee[];
+    totalCount: number;
+    activeEmployeesCount: number;
+    inactiveEmployeesCount: number;
+  }> {
+    return super.list<WrapperResult<Employee[]>>().pipe(
+      map(({ data, meta }) => ({
+        employees: data,
+        totalCount: meta?.count || 0,
+        activeEmployeesCount: data.filter((e) => e.status).length,
+        inactiveEmployeesCount: data.filter((e) => !e.status).length,
+      }))
+    );
   }
 
   getById(id: number): Observable<Employee | null> {
