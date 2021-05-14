@@ -15,6 +15,7 @@
 
 <div id="formContainer" class="container">
   <app-employee-form
+    #employeeForm
     *ngIf="canLoad"
     [employee]="employee"
     [countries]="countries"

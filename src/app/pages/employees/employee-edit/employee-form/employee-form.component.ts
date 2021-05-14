@@ -51,6 +51,14 @@ export class EmployeeFormComponent implements OnInit {
     this.onPositionChanged = this.onPositionChanged.bind(this);
   }
 
+  public resetForm(): void {
+    this.form.instance.resetValues();
+  }
+
+  public focusControl(dataField: keyof Employee): void {
+    this.form.instance.getEditor(dataField)?.focus();
+  }
+
   onContentReady({ component }: any) {
     if (this.operationType === 'new') {
       component.getEditor('name').focus();

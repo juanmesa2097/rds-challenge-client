@@ -5,11 +5,12 @@
 
 <div id="listContainer" class="container">
   <app-employees-list
-    *ngIf="(employees$ | async)?.length && (employees$ | async) as employees; else employeesNotFound"
+    *ngIf="employees?.length; else employeesNotFound"
     [employees]="employees"
     (clickNew)="onClickNew()"
     (clickEdit)="onClickEdit($event)"
     (clickPreview)="onClickPreview($event)"
+    (delete)="onDeleteEmployee($event)"
   ></app-employees-list>
 
   <ng-template #employeesNotFound>

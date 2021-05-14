@@ -4,8 +4,7 @@ import { Breadcrumb } from '@app/core/interfaces/breadcrumbs.interface';
 import { EmployeesService } from '@app/core/services/employees.service';
 import { ToastsService } from '@app/core/services/toasts.service';
 import { Employee } from '@app/core/types/models/employee.type';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { PathName, ResponseSuccessMessage } from 'src/app/core/enums';
 
 @Component({
@@ -13,7 +12,7 @@ import { PathName, ResponseSuccessMessage } from 'src/app/core/enums';
   styleUrls: ['./employees.page.scss'],
 })
 export class EmployeesPage implements OnInit {
-  employees$!: Observable<Employee[]>;
+  employees: Employee[] = [];
 
   breadcrumbs: Breadcrumb[];
 
@@ -32,12 +31,12 @@ export class EmployeesPage implements OnInit {
   ngOnInit(): void {
     this.loading = true;
 
-    this.employees$ = this.employeesService.getAll().pipe(
-      tap((employees) => {
-        this.canLoad = employees?.length > 0;
-        this.loading = false;
-      })
-    );
+    this.employeesService
+      .getAll()
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe((employees) => {
+        this.employees = employees;
+      });
   }
 
   onClickNew(): void {
@@ -53,11 +52,16 @@ export class EmployeesPage implements OnInit {
   }
 
   onDeleteEmployee(employeeId: number): void {
-    this.employeesService.delete(employeeId).subscribe((result) => {
-      if (result) {
-        this.toastsService.showSuccess(ResponseSuccessMessage.Delete);
-      }
-    });
+    this.loading = true;
+
+    this.employeesService
+      .delete(employeeId)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe((result) => {
+        if (result) {
+          this.toastsService.showSuccess(ResponseSuccessMessage.Delete);
+        }
+      });
   }
 
   onCreateEmployee(): void {

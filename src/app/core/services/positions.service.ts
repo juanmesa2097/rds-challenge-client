@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { NgxGenericRestService } from 'ngx-grs';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Position } from '../types';
 
 @Injectable({
@@ -21,7 +21,11 @@ export class PositionsService extends NgxGenericRestService {
     });
   }
 
-  getByAreaId(id: number): Observable<Position[]> {
+  getByAreaId(id: number): Observable<Position[] | []> {
+    if (!id) {
+      return of([]);
+    }
+
     return super.list<Position[]>({
       urlPostfix: `area/${id}`,
       mapFn: (res) => res.data,

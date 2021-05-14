@@ -1,4 +1,8 @@
-<dx-data-grid [dataSource]="employees" (onRowRemoved)="onRowRemoved($event)">
+<dx-data-grid
+  [dataSource]="employees"
+  keyExpr="id"
+  (onRowRemoved)="onRowRemoved($event)"
+>
   <dxo-editing [allowDeleting]="true"></dxo-editing>
   <dxo-search-panel [visible]="true" [width]="300"></dxo-search-panel>
   <dxo-filter-row [visible]="true"> </dxo-filter-row>

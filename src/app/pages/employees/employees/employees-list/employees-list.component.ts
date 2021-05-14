@@ -21,6 +21,7 @@ export class EmployeesListComponent implements OnInit {
   @Output() clickNew = new EventEmitter<void>();
   @Output() clickEdit = new EventEmitter<number>();
   @Output() clickPreview = new EventEmitter<number>();
+  @Output() delete = new EventEmitter<number>();
 
   constructor(private router: Router) {
     this.onClickEdit = this.onClickEdit.bind(this);
@@ -49,7 +50,7 @@ export class EmployeesListComponent implements OnInit {
     this.clickNew.emit();
   }
 
-  onRowRemoved(e: any) {
-    console.log(e);
+  onRowRemoved({ key }: { key: number }) {
+    this.delete.emit(key);
   }
 }

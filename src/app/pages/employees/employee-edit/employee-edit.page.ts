@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PathName } from '@app/core/enums';
 import { Breadcrumb } from '@app/core/interfaces/breadcrumbs.interface';
@@ -10,14 +10,17 @@ import { ToastsService } from '@app/core/services/toasts.service';
 import { Area, Country, Employee, Position } from '@app/core/types';
 import { OperationType } from '@app/core/types/operation.type';
 import { custom } from 'devextreme/ui/dialog';
-import { forkJoin, from, of } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { finalize, switchMap } from 'rxjs/operators';
+import { EmployeeFormComponent } from './employee-form/employee-form.component';
 
 @Component({
   templateUrl: './employee-edit.page.html',
   styleUrls: ['./employee-edit.page.scss'],
 })
 export class EmployeeEditPage implements OnInit {
+  @ViewChild('employeeForm') employeeForm!: EmployeeFormComponent;
+
   employeeId!: number;
 
   employee!: Employee | null;
@@ -77,9 +80,7 @@ export class EmployeeEditPage implements OnInit {
     this.loading = true;
 
     forkJoin({
-      employee: this.employeeId
-        ? this.employeeService.getById(this.employeeId)
-        : of(null),
+      employee: this.employeeService.getById(this.employeeId),
       countries: this.countriesService.getAll(),
       areas: this.areasService.getAll(),
     })
@@ -89,9 +90,7 @@ export class EmployeeEditPage implements OnInit {
           this.countries = countries;
           this.areas = areas;
 
-          return employee?.areaId
-            ? this.positionsService.getByAreaId(employee.areaId)
-            : from([]);
+          return this.positionsService.getByAreaId(employee?.areaId || 0);
         }),
         finalize(() => {
           this.canLoad = true;
@@ -117,7 +116,11 @@ export class EmployeeEditPage implements OnInit {
         {
           text: 'Crear otro empleado',
           onClick: () => {
-            return;
+            this.employeeForm.resetForm();
+
+            const controlToFocus =
+              this.currentRoute === 'new' ? 'name' : 'dateOfBirth';
+            this.employeeForm.focusControl(controlToFocus);
           },
         },
       ],

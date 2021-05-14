@@ -43,7 +43,7 @@ export const DevExtremeGlobalConfiguration = {
 
     dxLoadPanel.defaultOptions({
       options: {
-        shadingColor: 'rgba(0,0,0,0.01)',
+        shadingColor: 'rgba(0,0,0,0)',
         showIndicator: true,
         showPane: true,
         shading: true,

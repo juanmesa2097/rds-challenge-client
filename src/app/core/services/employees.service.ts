@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { NgxGenericRestService } from 'ngx-grs';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Employee } from '../types';
 
 @Injectable({
@@ -21,7 +21,11 @@ export class EmployeesService extends NgxGenericRestService {
     });
   }
 
-  getById(id: number): Observable<Employee> {
+  getById(id: number): Observable<Employee | null> {
+    if (!id) {
+      return of(null);
+    }
+
     return super.single<Employee>(id);
   }
 
