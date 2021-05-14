@@ -29,8 +29,8 @@
   ></dxi-column>
   <dxi-column
     dataField="dateOfBirth"
+    [calculateCellValue]="calculateEmployeeAge"
     caption="Edad"
-    dataType="date"
   ></dxi-column>
   <dxi-column
     dataField="hiringDate"

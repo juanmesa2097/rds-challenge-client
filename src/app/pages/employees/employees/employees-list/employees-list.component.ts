@@ -7,6 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { Employee } from '@app/core/types/models/employee.type';
+import { calculateAge } from '@app/core/utils';
 
 @Component({
   selector: 'app-employees-list',
@@ -31,6 +32,10 @@ export class EmployeesListComponent implements OnInit {
 
   calculateEmployeeName({ name, position }: Employee): string {
     return `${name} (${position?.name})`;
+  }
+
+  calculateEmployeeAge({ dateOfBirth }: Employee): string {
+    return calculateAge(dateOfBirth).toString();
   }
 
   onClickEdit({ row }: any): void {
