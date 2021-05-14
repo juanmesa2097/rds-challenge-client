@@ -3,11 +3,7 @@ import { NgModule } from '@angular/core';
 import { BreadcrumbsModule } from '@app/components/breadcrumbs/breadcrumbs.module';
 import { PageHeaderWrapperModule } from '@app/components/page-header-wrapper/page-header-wrapper.module';
 import { StatsModule } from '@app/components/stats/stats.module';
-import {
-  DxButtonModule,
-  DxLoadPanelModule,
-  DxSpeedDialActionModule,
-} from 'devextreme-angular';
+import { DxButtonModule, DxLoadPanelModule } from 'devextreme-angular';
 import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
 import { EmployeeStatusComponent } from './employee-status/employee-status.component';
 import { EmployeesListComponent } from './employees-list/employees-list.component';
@@ -29,7 +25,6 @@ import { EmployeesPage } from './employees.page';
     BreadcrumbsModule,
     StatsModule,
     DxDataGridModule,
-    DxSpeedDialActionModule,
     DxButtonModule,
     DxLoadPanelModule,
   ],

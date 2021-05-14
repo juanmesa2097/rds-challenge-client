@@ -6,7 +6,6 @@ import { AreasService } from '@app/core/services/areas.service';
 import { CountriesService } from '@app/core/services/countries.service';
 import { EmployeesService } from '@app/core/services/employees.service';
 import { PositionsService } from '@app/core/services/positions.service';
-import { ToastsService } from '@app/core/services/toasts.service';
 import { Area, Country, Employee, Position } from '@app/core/types';
 import { OperationType } from '@app/core/types/operation.type';
 import { custom } from 'devextreme/ui/dialog';
@@ -40,8 +39,7 @@ export class EmployeeEditPage implements OnInit {
     private employeeService: EmployeesService,
     private positionsService: PositionsService,
     private areasService: AreasService,
-    private countriesService: CountriesService,
-    private toastsService: ToastsService
+    private countriesService: CountriesService
   ) {
     const snapshot = this.activatedRoute.snapshot;
 
@@ -86,7 +84,11 @@ export class EmployeeEditPage implements OnInit {
     })
       .pipe(
         switchMap(({ employee, countries, areas }) => {
-          this.employee = employee;
+          this.employee = {
+            ...employee,
+            status: employee?.status || true,
+          } as Employee;
+
           this.countries = countries;
           this.areas = areas;
 

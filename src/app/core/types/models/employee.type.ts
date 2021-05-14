@@ -13,4 +13,5 @@ export type Employee = BaseType & {
 } & {
   areaId: number;
   avatarUrl?: string;
+  countryFlagUrl?: string;
 };

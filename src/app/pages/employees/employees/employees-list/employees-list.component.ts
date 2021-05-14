@@ -41,8 +41,21 @@ export class EmployeesListComponent implements OnInit {
     this.clickPreview.emit(row.data.id);
   }
 
-  onClickNewEmployee(): void {
-    this.clickNew.emit();
+  onToolbarPreparing({ toolbarOptions }: any) {
+    toolbarOptions.items.unshift({
+      location: 'after',
+      widget: 'dxButton',
+      options: {
+        type: 'default',
+        hint: 'Crear nuevo empleado',
+        text: 'Crear empleado',
+        icon: 'add',
+        onClick: () => {
+          this.clickNew.emit();
+        },
+      },
+      showText: 'auto',
+    });
   }
 
   onRowRemoved({ key }: { key: number }) {

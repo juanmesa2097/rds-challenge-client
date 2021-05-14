@@ -1,16 +1,17 @@
 <dx-data-grid
   [dataSource]="employees"
   keyExpr="id"
+  (onToolbarPreparing)="onToolbarPreparing($event)"
   (onRowRemoved)="onRowRemoved($event)"
 >
   <dxo-editing [allowDeleting]="true"></dxo-editing>
   <dxo-search-panel [visible]="true" [width]="300"></dxo-search-panel>
   <dxo-filter-row [visible]="true"> </dxo-filter-row>
   <dxo-header-filter [visible]="true"></dxo-header-filter>
-  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-paging [pageSize]="5"></dxo-paging>
   <dxo-pager
     [showPageSizeSelector]="true"
-    [allowedPageSizes]="[10, 25, 50]"
+    [allowedPageSizes]="[5, 10, 25, 50]"
   ></dxo-pager>
   <!-- /options -->
 
@@ -68,11 +69,3 @@
   </div>
   <!-- /cell templates -->
 </dx-data-grid>
-
-<dx-speed-dial-action
-  icon="add"
-  label="Crear nuevo empleado"
-  [index]="1"
-  (onClick)="onClickNewEmployee()"
->
-</dx-speed-dial-action>

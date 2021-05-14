@@ -53,6 +53,7 @@ export class EmployeeFormComponent implements OnInit {
 
   public resetForm(): void {
     this.form.instance.resetValues();
+    this.employeeData.status = true;
   }
 
   public focusControl(dataField: keyof Employee): void {

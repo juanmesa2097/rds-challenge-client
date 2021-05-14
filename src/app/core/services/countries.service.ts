@@ -10,12 +10,22 @@ import { Country } from '../types';
 export class CountriesService extends NgxGenericRestService {
   constructor() {
     super({
-      baseUrl: environment.countriesApiV2,
-      resourceName: 'all',
+      baseUrl: '',
+      resourceName: '',
     });
   }
 
   getAll(): Observable<Country[]> {
-    return super.list<Country[]>();
+    return super.list<Country[]>({
+      urlRewrite: `${environment.countriesApiV2}/all`,
+    });
+  }
+
+  getByCodes(...codes: string[]): Observable<Country> {
+    return super.list<Country>({
+      urlRewrite: `${environment.countriesApiV2}/alpha?codes=${codes.join(
+        ';'
+      )}`,
+    });
   }
 }
