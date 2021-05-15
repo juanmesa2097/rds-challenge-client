@@ -7,13 +7,13 @@
       <a
         *ngIf="item.path; else justText"
         [routerLink]="['/', item.path]"
-        class="mr-3 font-semibold text-white hover:text-blue-300"
+        class="mr-3 text-xs font-semibold text-white  md:text-base hover:text-blue-300"
       >
         {{ item.name }}
       </a>
 
       <ng-template #justText>
-        <span class="text-gray-300">{{ item.name }}</span>
+        <span class="text-xs text-gray-300 md:text-base">{{ item.name }}</span>
       </ng-template>
 
       <svg
