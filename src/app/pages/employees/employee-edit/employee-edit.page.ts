@@ -61,7 +61,16 @@ export class EmployeeEditPage implements OnInit {
       .subscribe((positions) => (this.positions = positions));
   }
 
+  onGoBack(): void {
+    this.router.navigate(['/', PathName.Employees]);
+  }
+
   onSave(employee: Employee): void {
+    if (!employee.avatarUrl) {
+      const avatar = this.getAvatarUrl();
+      employee.avatarUrl = avatar;
+    }
+
     this.loading = true;
 
     this.employeeService
@@ -100,6 +109,11 @@ export class EmployeeEditPage implements OnInit {
         })
       )
       .subscribe((positions) => (this.positions = positions));
+  }
+
+  private getAvatarUrl(): string {
+    const rnd = Math.floor(Math.random() * 70);
+    return `https://i.pravatar.cc/150?img=${rnd}`;
   }
 
   private async showConfirmDialog(): Promise<void> {
