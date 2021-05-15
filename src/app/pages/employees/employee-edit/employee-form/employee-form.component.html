@@ -1,13 +1,13 @@
 <p
   *ngIf="operationType === 'preview'"
-  class="relative p-4 pl-8 mb-8 text-blue-800 border-l-8 border-blue-600  bg-gradient-to-br from-blue-100 to-blue-200"
+  class="relative p-4 pl-8 mb-8 text-blue-800 border-l-8 border-blue-600 bg-gradient-to-br from-blue-100 to-blue-200"
 >
   Se encuentra en modo <strong class="font-semibold">vista previa</strong>.
   <br />
   No podrá editar los datos mientras este modo esté activado.
 </p>
 
-<form (submit)="onSubmit($event)" class="px-6 bg-white rounded-lg">
+<form (submit)="onSubmit($event)">
   <dx-form
     #form
     [(formData)]="employeeData"
