@@ -25,10 +25,7 @@ export class EmployeesService extends NgxGenericRestService {
   }> {
     return super.list<WrapperResult<Employee[]>>().pipe(
       map(({ data, meta }) => ({
-        employees: data.map((employee) => ({
-          ...employee,
-          avatarUrl: this.getAvatarUrl(),
-        })),
+        employees: data,
         totalCount: meta?.count || 0,
         activeEmployeesCount: data.filter((e) => e.status).length,
         inactiveEmployeesCount: data.filter((e) => !e.status).length,
@@ -47,10 +44,5 @@ export class EmployeesService extends NgxGenericRestService {
   createOrUpdate(employee: Employee): Observable<Employee> {
     const { id } = employee;
     return id ? super.update(id, employee) : super.add(employee);
-  }
-
-  private getAvatarUrl(): string {
-    const rnd = Math.floor(Math.random() * 70);
-    return `https://i.pravatar.cc/150?img=${rnd}`;
   }
 }
