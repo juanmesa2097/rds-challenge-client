@@ -46,7 +46,7 @@ export const DevExtremeGlobalConfiguration = {
         shadingColor: 'rgba(0,0,0,0)',
         showIndicator: true,
         showPane: true,
-        shading: true,
+        shading: false,
         closeOnOutsideClick: false,
       },
     });
