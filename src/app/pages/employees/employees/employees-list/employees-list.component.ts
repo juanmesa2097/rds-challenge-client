@@ -50,6 +50,7 @@ export class EmployeesListComponent implements OnInit {
     toolbarOptions.items.unshift({
       location: 'after',
       widget: 'dxButton',
+      locateInMenu: 'auto',
       options: {
         type: 'default',
         hint: 'Crear nuevo empleado',
@@ -59,7 +60,6 @@ export class EmployeesListComponent implements OnInit {
           this.clickNew.emit();
         },
       },
-      showText: 'auto',
     });
   }
 

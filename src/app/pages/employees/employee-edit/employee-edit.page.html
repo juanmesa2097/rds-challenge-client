@@ -13,7 +13,7 @@
   <app-breadcrumbs [items]="breadcrumbs"></app-breadcrumbs>
 </app-page-header-wrapper>
 
-<div id="formContainer" class="container">
+<app-page-content-wrapper id="content">
   <app-employee-form
     #employeeForm
     *ngIf="canLoad"
@@ -23,13 +23,14 @@
     [positions]="positions"
     [operationType]="currentRoute"
     (changeArea)="onChangeArea($event)"
+    (goBack)="onGoBack()"
     (save)="onSave($event)"
   ></app-employee-form>
-</div>
+</app-page-content-wrapper>
 
 <dx-load-panel
   shadingColor="rgba(0,0,0,0.05)"
-  [position]="{ of: '#formContainer', at: 'center' }"
+  [position]="{ of: '#content', at: 'center' }"
   [visible]="!canLoad || loading"
 >
 </dx-load-panel>

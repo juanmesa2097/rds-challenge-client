@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BreadcrumbsModule } from '@app/components/breadcrumbs/breadcrumbs.module';
+import { PageContentWrapperModule } from '@app/components/page-content-wrapper/page-content-wrapper.module';
 import { PageHeaderWrapperModule } from '@app/components/page-header-wrapper/page-header-wrapper.module';
 import { StatsModule } from '@app/components/stats/stats.module';
 import { DxButtonModule, DxLoadPanelModule } from 'devextreme-angular';
@@ -22,6 +23,7 @@ import { EmployeesPage } from './employees.page';
     CommonModule,
     EmployeesRoutingModule,
     PageHeaderWrapperModule,
+    PageContentWrapperModule,
     BreadcrumbsModule,
     StatsModule,
     DxDataGridModule,

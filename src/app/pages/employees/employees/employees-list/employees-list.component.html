@@ -5,7 +5,7 @@
   (onRowRemoved)="onRowRemoved($event)"
 >
   <dxo-editing [allowDeleting]="true"></dxo-editing>
-  <dxo-search-panel [visible]="true" [width]="300"></dxo-search-panel>
+  <dxo-search-panel [visible]="true" [width]="250"></dxo-search-panel>
   <dxo-filter-row [visible]="true"> </dxo-filter-row>
   <dxo-header-filter [visible]="true"></dxo-header-filter>
   <dxo-paging [pageSize]="5"></dxo-paging>
@@ -17,7 +17,6 @@
 
   <dxi-column
     dataField="avatar"
-    [width]="90"
     [allowFiltering]="false"
     [allowSorting]="false"
     cellTemplate="avatarTemplate"
@@ -36,7 +35,12 @@
     dataField="hiringDate"
     caption="Fecha contratación"
     dataType="date"
-    format="longDate"
+    format="shortDate"
+  ></dxi-column>
+  <dxi-column
+    dataField="country"
+    caption="País"
+    cellTemplate="countryTemplate"
   ></dxi-column>
   <dxi-column
     dataField="status"
@@ -51,10 +55,20 @@
   <!-- /columns -->
 
   <div *dxTemplate="let data of 'avatarTemplate'">
-    <div class="object-cover overflow-hidden rounded-full">
-      <img [src]="data.data.avatarUrl" />
+    <img
+      [src]="data.data.avatarUrl"
+      class="object-cover w-16 h-16 overflow-hidden rounded-full"
+    />
+  </div>
+  <!-- /avatar -->
+
+  <div *dxTemplate="let data of 'countryTemplate'">
+    <div class="flex items-center">
+      <img [src]="data.data.countryFlagUrl" class="w-8 mr-3" />
+      <span>{{ data.data.country }}</span>
     </div>
   </div>
+  <!-- /country -->
 
   <div *dxTemplate="let data of 'statusTemplate'">
     <app-employee-status

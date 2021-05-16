@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { PathName } from './core/enums';
+import { NotFoundPage } from './pages/not-found/not-found.page';
 
 const routes: Routes = [
   {
@@ -26,6 +27,12 @@ const routes: Routes = [
           ),
       },
     ],
+  },
+  {
+    path: '**',
+    loadChildren: () =>
+      import('@pages/not-found/not-found.module').then((m) => m.NotFoundModule),
+    component: NotFoundPage,
   },
 ];
 

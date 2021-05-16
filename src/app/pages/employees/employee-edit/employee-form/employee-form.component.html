@@ -1,6 +1,6 @@
 <p
   *ngIf="operationType === 'preview'"
-  class="relative p-4 pl-8 mb-4 text-blue-800 border-l-8 border-blue-600 rounded-lg  bg-gradient-to-br from-blue-100 to-blue-200"
+  class="relative p-4 pl-8 mb-8 text-blue-800 border-l-8 border-blue-600 bg-gradient-to-br from-blue-100 to-blue-200"
 >
   Se encuentra en modo <strong class="font-semibold">vista previa</strong>.
   <br />
@@ -12,6 +12,7 @@
     #form
     [(formData)]="employeeData"
     [colCount]="2"
+    [showValidationSummary]="true"
     [readOnly]="operationType === 'preview'"
     (onContentReady)="onContentReady($event)"
     (onFieldDataChanged)="onFieldDataChanged($event)"
@@ -19,7 +20,10 @@
     <dxi-item itemType="group">
       <dxi-item dataField="name" *ngIf="operationType === 'new'">
         <dxo-label text="Nombre"></dxo-label>
-        <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule
+          type="required"
+          message="El nombre es obligatorio"
+        ></dxi-validation-rule>
         <dxi-validation-rule
           type="pattern"
           pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$"
@@ -37,7 +41,16 @@
         }"
       >
         <dxo-label text="Fecha de nacimiento"></dxo-label>
-        <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule
+          type="required"
+          message="La fecha de nacimiento es obligatoria"
+        ></dxi-validation-rule>
+        <dxi-validation-rule
+          type="custom"
+          [validationCallback]="validateAge"
+          message="El empleado debe ser mayor de edad"
+        >
+        </dxi-validation-rule>
       </dxi-item>
       <!-- /item -->
 
@@ -46,19 +59,24 @@
         editorType="dxSelectBox"
         [editorOptions]="{
           items: countries,
-          valueExpr: 'alpha3Code',
+          valueExpr: 'name',
           displayExpr: 'name',
-          searchEnabled: true
+          searchEnabled: true,
+          onValueChanged: onCountryChanged
         }"
       >
         <dxo-label text="País"></dxo-label>
-        <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule type="required" message="El país es obligatorio">
+        </dxi-validation-rule>
       </dxi-item>
       <!-- /item -->
 
       <dxi-item dataField="username">
         <dxo-label text="Nombre de usuario"></dxo-label>
-        <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule
+          type="required"
+          message="El nombre de usuario es obligatorio"
+        ></dxi-validation-rule>
         <dxi-validation-rule
           type="pattern"
           pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$"
@@ -76,7 +94,10 @@
         }"
       >
         <dxo-label text="Fecha de contratación"></dxo-label>
-        <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule
+          type="required"
+          message="La fecha de contratación es obligatoria"
+        ></dxi-validation-rule>
       </dxi-item>
       <!-- /item -->
 
@@ -101,7 +122,10 @@
         }"
       >
         <dxo-label text="Área"></dxo-label>
-        <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule
+          type="required"
+          message="El área es obligatoria"
+        ></dxi-validation-rule>
       </dxi-item>
       <!-- /item -->
 
@@ -117,7 +141,10 @@
         }"
       >
         <dxo-label text="Cargo"></dxo-label>
-        <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule
+          type="required"
+          message="El cargo es obligatorio"
+        ></dxi-validation-rule>
       </dxi-item>
       <!-- /item -->
 
@@ -130,42 +157,43 @@
           max: 100
         }"
       >
-        <dxo-label text="Comisión"></dxo-label>
+        <dxo-label
+          text="Comisión"
+          message="La comisión es obligatoria"
+        ></dxo-label>
         <dxi-validation-rule type="required"></dxi-validation-rule>
       </dxi-item>
       <!-- /item -->
     </dxi-item>
     <!-- /right column -->
 
-    <dxi-item
-      *ngIf="operationType !== 'preview'"
-      itemType="group"
-      cssClass="my-12 flex"
-      [colSpan]="2"
-    >
-      <dxi-item
-        itemType="button"
-        horizontalAlignment="left"
-        [buttonOptions]="{
-          text: 'Guardar',
-          icon: 'save',
-          type: 'success',
-          useSubmitBehavior: true,
-          disabled: submitButtonDisabled
-        }"
-      >
-      </dxi-item>
-      <dxi-item
-        itemType="button"
-        horizontalAlignment="left"
-        [buttonOptions]="{
-          text: 'Atrás',
-          icon: 'arrowleft',
-          type: 'secondary'
-        }"
-      >
-      </dxi-item>
-    </dxi-item>
     <!-- /buttons -->
   </dx-form>
+
+  <dx-toolbar class="mt-12">
+    <dxi-item
+      location="before"
+      widget="dxButton"
+      locateInMenu="auto"
+      [options]="{
+        hint: 'Regresar a la lista de empleados',
+        type: 'back',
+        onClick: onClickGoBack
+      }"
+    >
+    </dxi-item>
+    <dxi-item
+      location="before"
+      widget="dxButton"
+      locateInMenu="auto"
+      [options]="{
+        type: 'success',
+        text: 'Guardar',
+        icon: 'save',
+        stylingMode: 'contained',
+        useSubmitBehavior: true
+      }"
+    >
+    </dxi-item>
+  </dx-toolbar>
 </form>

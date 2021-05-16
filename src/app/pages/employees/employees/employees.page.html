@@ -3,7 +3,7 @@
   <app-breadcrumbs [items]="breadcrumbs"></app-breadcrumbs>
 </app-page-header-wrapper>
 
-<div id="listContainer" class="container overflow-hidden bg-white rounded-lg">
+<app-page-content-wrapper id="content">
   <app-stats *ngIf="stats.length" [data]="stats"></app-stats>
   <!-- /stats -->
 
@@ -24,11 +24,11 @@
     ></app-employees-not-found>
   </ng-template>
   <!-- /employees not found -->
-</div>
+</app-page-content-wrapper>
 
 <dx-load-panel
   shadingColor="rgba(0,0,0,0.05)"
-  [position]="{ of: '#listContainer', at: 'center' }"
+  [position]="{ of: '#content', at: 'center' }"
   [visible]="loading"
 >
 </dx-load-panel>
